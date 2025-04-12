@@ -10,7 +10,7 @@ const popularServices = [
     image: 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=600&q=80',
     rating: 4.9,
     reviews: 438,
-    price: 120,
+    price: 1499,
     freelancer: 'Daniel K.',
     freelancerImage: 'https://randomuser.me/api/portraits/men/32.jpg',
     link: '/service/1',
@@ -22,7 +22,7 @@ const popularServices = [
     image: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=600&q=80',
     rating: 4.8,
     reviews: 912,
-    price: 80,
+    price: 999,
     freelancer: 'Sarah M.',
     freelancerImage: 'https://randomuser.me/api/portraits/women/44.jpg',
     link: '/service/2',
@@ -34,7 +34,7 @@ const popularServices = [
     image: 'https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=600&q=80',
     rating: 4.7,
     reviews: 522,
-    price: 60,
+    price: 799,
     freelancer: 'James L.',
     freelancerImage: 'https://randomuser.me/api/portraits/men/86.jpg',
     link: '/service/3',
@@ -46,7 +46,7 @@ const popularServices = [
     image: 'https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=600&q=80',
     rating: 4.9,
     reviews: 327,
-    price: 150,
+    price: 1999,
     freelancer: 'Emma R.',
     freelancerImage: 'https://randomuser.me/api/portraits/women/33.jpg',
     link: '/service/4',
@@ -104,7 +104,7 @@ const PopularServices = () => {
                       <span className="text-sm font-medium">{service.freelancer}</span>
                     </div>
                     <div className="text-skill-purple font-semibold">
-                      From ${service.price}
+                      From ₹{service.price}
                     </div>
                   </div>
                 </div>
