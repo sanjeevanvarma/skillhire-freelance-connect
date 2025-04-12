@@ -9,7 +9,7 @@ const Hero = () => {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Find the perfect freelance services for your business
+            Find the perfect freelance Services for your business
           </h1>
           <p className="text-lg md:text-xl mb-6">
             Connect with skilled professionals and get quality work done quickly
