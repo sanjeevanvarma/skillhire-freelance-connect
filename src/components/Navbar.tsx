@@ -1,7 +1,7 @@
 
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Search, Globe } from 'lucide-react';
+import { Menu, X, Search, Globe, Home } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
@@ -17,6 +17,9 @@ const Navbar = () => {
         <div className="flex items-center justify-between">
           {/* Logo and left section */}
           <div className="flex items-center">
+            <Link to="/" className="mr-4 text-skill-gray-dark hover:text-skill-purple transition-colors">
+              <Home size={24} />
+            </Link>
             <button 
               className="lg:hidden mr-4 text-skill-gray-dark"
               onClick={toggleMobileMenu}

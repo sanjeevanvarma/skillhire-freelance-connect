@@ -11,9 +11,23 @@ const Hero = () => {
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
             Find the perfect freelance services for your business
           </h1>
-          <p className="text-lg md:text-xl mb-8">
+          <p className="text-lg md:text-xl mb-6">
             Connect with skilled professionals and get quality work done quickly
           </p>
+          
+          {/* Join buttons */}
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+            <Link to="/join?type=client">
+              <Button className="w-full sm:w-auto bg-white text-skill-purple hover:bg-gray-100 text-base px-6 py-2">
+                Join as a Client
+              </Button>
+            </Link>
+            <Link to="/join?type=freelancer">
+              <Button className="w-full sm:w-auto bg-skill-purple/20 border border-white hover:bg-skill-purple/30 text-white text-base px-6 py-2">
+                Join as a Freelancer
+              </Button>
+            </Link>
+          </div>
           
           {/* Search bar */}
           <div className="relative max-w-2xl mx-auto mb-8">
