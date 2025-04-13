@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/slider";
 
 // Mock data for freelancer services
-const mockServices = [
+export const mockServices = [
   {
     id: 1,
     title: "Professional WordPress Website Development",
