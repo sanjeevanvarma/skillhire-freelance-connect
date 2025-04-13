@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Navbar from "@/components/Navbar";
@@ -12,10 +11,12 @@ import {
   ThumbsUp, 
   FileText, 
   Briefcase,
-  Search 
+  Search,
+  Send
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 // Mock data for freelancer
 const mockFreelancer = {
@@ -25,17 +26,17 @@ const mockFreelancer = {
   image: "https://randomuser.me/api/portraits/men/32.jpg",
   coverImage: "https://images.unsplash.com/photo-1487017159836-4e23ece2e4cf?auto=format&fit=crop&w=1200&q=80",
   rating: 4.9,
-  reviews: 438,
+  reviewCount: 438,
   lastActive: "2 hours ago",
-  location: "United States",
+  location: "India",
   memberSince: "Jan 2020",
-  languages: ["English", "Spanish"],
+  languages: ["English", "Hindi"],
   description: "I'm a full-stack web developer with over 7 years of experience building websites and web applications. I specialize in React, Node.js, and WordPress development. I pride myself on clean code, responsive design, and providing excellent communication throughout the development process.",
   skills: ["React", "Node.js", "WordPress", "JavaScript", "HTML/CSS", "Responsive Design", "API Integration"],
   education: [
     {
       degree: "B.S. Computer Science",
-      school: "University of California",
+      school: "University of Delhi",
       year: "2015"
     }
   ],
@@ -79,7 +80,7 @@ const mockFreelancer = {
       link: "#"
     }
   ],
-  reviews: [
+  reviewList: [
     {
       id: 1,
       name: "John D.",
@@ -104,20 +105,42 @@ const mockFreelancer = {
       date: "5 months ago",
       comment: "Daniel is very knowledgeable and professional. He built a great website for our business and was always available to answer our questions."
     }
-  ]
+  ],
+  pricing: {
+    basic: "₹1,499",
+    standard: "₹1,899",
+    premium: "₹2,499"
+  }
 };
 
 const FreelancerProfile = () => {
   const { freelancerId } = useParams();
   const [searchReview, setSearchReview] = useState("");
+  const [chatMessage, setChatMessage] = useState("");
+  const [chatMessages, setChatMessages] = useState<{ text: string; fromUser: boolean }[]>([]);
   
   // In a real app, you would fetch the freelancer data using the freelancerId
   const freelancer = mockFreelancer;
   
   // Filter reviews based on search
-  const filteredReviews = freelancer.reviews.filter(
+  const filteredReviews = freelancer.reviewList.filter(
     review => review.comment.toLowerCase().includes(searchReview.toLowerCase())
   );
+
+  const handleSendMessage = () => {
+    if (chatMessage.trim()) {
+      setChatMessages([...chatMessages, { text: chatMessage, fromUser: true }]);
+      setChatMessage("");
+      
+      // Simulate response after a short delay
+      setTimeout(() => {
+        setChatMessages(prev => [...prev, { 
+          text: `Hi there! Thanks for reaching out. I'm available to discuss your project. Could you please provide more details?`, 
+          fromUser: false 
+        }]);
+      }, 1000);
+    }
+  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -155,7 +178,7 @@ const FreelancerProfile = () => {
                 <div className="flex items-center">
                   <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />
                   <span className="ml-1 font-medium">{freelancer.rating}</span>
-                  <span className="ml-1 text-skill-gray-neutral">({freelancer.reviews} reviews)</span>
+                  <span className="ml-1 text-skill-gray-neutral">({freelancer.reviewCount} reviews)</span>
                 </div>
                 
                 {/* Active Status */}
@@ -174,7 +197,7 @@ const FreelancerProfile = () => {
             
             {/* Contact Button */}
             <div className="mt-4 md:mt-0 md:self-center">
-              <Button className="btn-primary">
+              <Button className="bg-skill-purple hover:bg-skill-deep-purple" onClick={() => document.getElementById('chat-tab')?.click()}>
                 <MessageSquare className="w-4 h-4 mr-2" />
                 Contact Me
               </Button>
@@ -188,6 +211,7 @@ const FreelancerProfile = () => {
                 <TabsTrigger value="about">About</TabsTrigger>
                 <TabsTrigger value="portfolio">Portfolio</TabsTrigger>
                 <TabsTrigger value="reviews">Reviews</TabsTrigger>
+                <TabsTrigger id="chat-tab" value="chat">Chat</TabsTrigger>
               </TabsList>
               
               {/* About Tab */}
@@ -236,6 +260,24 @@ const FreelancerProfile = () => {
                   
                   {/* Sidebar */}
                   <div>
+                    <div className="bg-skill-gray-light rounded-lg p-4 mb-6">
+                      <h3 className="font-semibold mb-3">Pricing</h3>
+                      <div className="space-y-3">
+                        <div className="flex justify-between">
+                          <span>Basic Package:</span>
+                          <span className="font-semibold">{freelancer.pricing.basic}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Standard Package:</span>
+                          <span className="font-semibold">{freelancer.pricing.standard}</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span>Premium Package:</span>
+                          <span className="font-semibold">{freelancer.pricing.premium}</span>
+                        </div>
+                      </div>
+                    </div>
+                    
                     <div className="bg-skill-gray-light rounded-lg p-4 mb-6">
                       <h3 className="font-semibold mb-3">Languages</h3>
                       <ul className="space-y-2">
@@ -307,7 +349,7 @@ const FreelancerProfile = () => {
                 <div className="py-6">
                   <div className="flex flex-col md:flex-row justify-between mb-6">
                     <h2 className="text-xl font-semibold mb-4 md:mb-0">
-                      Reviews ({freelancer.reviews.length})
+                      Reviews ({freelancer.reviewList.length})
                     </h2>
                     
                     {/* Search reviews */}
@@ -373,6 +415,61 @@ const FreelancerProfile = () => {
                         <p className="text-skill-gray-neutral">No reviews matching your search.</p>
                       </div>
                     )}
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* Chat Tab */}
+              <TabsContent value="chat">
+                <div className="py-6">
+                  <h2 className="text-xl font-semibold mb-6">Chat with {freelancer.name}</h2>
+                  
+                  <div className="bg-gray-50 rounded-lg p-4 mb-4 h-80 overflow-y-auto flex flex-col">
+                    {chatMessages.length > 0 ? (
+                      chatMessages.map((msg, index) => (
+                        <div 
+                          key={index} 
+                          className={`mb-3 max-w-[75%] ${msg.fromUser ? 'self-end' : 'self-start'}`}
+                        >
+                          <div 
+                            className={`rounded-lg px-4 py-2 ${
+                              msg.fromUser 
+                                ? 'bg-skill-purple text-white' 
+                                : 'bg-gray-200 text-gray-800'
+                            }`}
+                          >
+                            {msg.text}
+                          </div>
+                          <div 
+                            className={`text-xs mt-1 text-gray-500 ${
+                              msg.fromUser ? 'text-right' : 'text-left'
+                            }`}
+                          >
+                            {msg.fromUser ? 'You' : freelancer.name} • Just now
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="h-full flex items-center justify-center text-gray-500">
+                        <p>No messages yet. Start the conversation!</p>
+                      </div>
+                    )}
+                  </div>
+                  
+                  <div className="flex gap-2">
+                    <Input
+                      placeholder="Type your message here..."
+                      value={chatMessage}
+                      onChange={(e) => setChatMessage(e.target.value)}
+                      onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                      className="flex-1"
+                    />
+                    <Button 
+                      onClick={handleSendMessage}
+                      className="bg-skill-purple hover:bg-skill-deep-purple"
+                    >
+                      <Send size={18} />
+                    </Button>
                   </div>
                 </div>
               </TabsContent>

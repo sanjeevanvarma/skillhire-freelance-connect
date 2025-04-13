@@ -10,7 +10,7 @@ import FreelancerProfile from "./pages/FreelancerProfile";
 import SignIn from "./pages/SignIn";
 import Join from "./pages/Join";
 import NotFound from "./pages/NotFound";
-
+import ServiceDetail from "./pages/ServiceDetail";
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -26,6 +26,7 @@ const App = () => (
           <Route path="/freelancers/:freelancerId" element={<FreelancerProfile />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/join" element={<Join />} />
+          <Route path="/service/:serviceId" element={<ServiceDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

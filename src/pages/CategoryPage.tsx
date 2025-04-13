@@ -1,9 +1,8 @@
-
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Star, Filter, ChevronDown } from "lucide-react";
+import { Star, Filter, ChevronDown, IndianRupee } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -25,10 +24,10 @@ const mockServices = [
     image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?auto=format&fit=crop&w=600&q=80",
     rating: 4.9,
     reviews: 438,
-    price: 120,
+    price: 1499,
     freelancer: "Daniel K.",
     freelancerImage: "https://randomuser.me/api/portraits/men/32.jpg",
-    link: "/service/1",
+    link: "/freelancers/1",
   },
   {
     id: 2,
@@ -38,10 +37,10 @@ const mockServices = [
     image: "https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=600&q=80",
     rating: 4.8,
     reviews: 912,
-    price: 80,
-    freelancer: "Sarah M.",
+    price: 899,
+    freelancer: "Priya M.",
     freelancerImage: "https://randomuser.me/api/portraits/women/44.jpg",
-    link: "/service/2",
+    link: "/freelancers/2",
   },
   {
     id: 3,
@@ -51,10 +50,10 @@ const mockServices = [
     image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?auto=format&fit=crop&w=600&q=80",
     rating: 4.7,
     reviews: 522,
-    price: 60,
-    freelancer: "James L.",
+    price: 649,
+    freelancer: "Rajesh L.",
     freelancerImage: "https://randomuser.me/api/portraits/men/86.jpg",
-    link: "/service/3",
+    link: "/freelancers/3",
   },
   {
     id: 4,
@@ -64,10 +63,10 @@ const mockServices = [
     image: "https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=600&q=80",
     rating: 4.9,
     reviews: 327,
-    price: 150,
-    freelancer: "Emma R.",
+    price: 1899,
+    freelancer: "Neha R.",
     freelancerImage: "https://randomuser.me/api/portraits/women/33.jpg",
-    link: "/service/4",
+    link: "/freelancers/4",
   },
   {
     id: 5,
@@ -77,10 +76,10 @@ const mockServices = [
     image: "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?auto=format&fit=crop&w=600&q=80",
     rating: 4.8,
     reviews: 215,
-    price: 90,
-    freelancer: "Michael T.",
+    price: 799,
+    freelancer: "Vikram T.",
     freelancerImage: "https://randomuser.me/api/portraits/men/42.jpg",
-    link: "/service/5",
+    link: "/freelancers/5",
   },
   {
     id: 6,
@@ -90,11 +89,89 @@ const mockServices = [
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=600&q=80",
     rating: 4.6,
     reviews: 183,
-    price: 200,
-    freelancer: "Jessica H.",
+    price: 1999,
+    freelancer: "Ritu H.",
     freelancerImage: "https://randomuser.me/api/portraits/women/56.jpg",
-    link: "/service/6",
+    link: "/freelancers/6",
   },
+  {
+    id: 7,
+    title: "Basic Website Development",
+    description: "I will create a simple yet professional website for your small business.",
+    category: "web-design",
+    image: "https://images.unsplash.com/photo-1517180102446-f3ece451e9d8?auto=format&fit=crop&w=600&q=80",
+    rating: 4.5,
+    reviews: 98,
+    price: 1299,
+    freelancer: "Arjun S.",
+    freelancerImage: "https://randomuser.me/api/portraits/men/37.jpg",
+    link: "/freelancers/7",
+  },
+  {
+    id: 8,
+    title: "Flyer & Brochure Design",
+    description: "I will design eye-catching flyers and brochures for your business.",
+    category: "graphics-design",
+    image: "https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?auto=format&fit=crop&w=600&q=80",
+    rating: 4.7,
+    reviews: 156,
+    price: 699,
+    freelancer: "Meera K.",
+    freelancerImage: "https://randomuser.me/api/portraits/women/29.jpg",
+    link: "/freelancers/8",
+  },
+  {
+    id: 9,
+    title: "Content Writing for Beginners",
+    description: "I will write engaging content for your business website or blog.",
+    category: "writing",
+    image: "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=600&q=80",
+    rating: 4.6,
+    reviews: 87,
+    price: 499,
+    freelancer: "Ankur G.",
+    freelancerImage: "https://randomuser.me/api/portraits/men/15.jpg",
+    link: "/freelancers/9",
+  },
+  {
+    id: 10,
+    title: "YouTube Video Editing",
+    description: "I will edit your YouTube videos to increase engagement and views.",
+    category: "video-editing",
+    image: "https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?auto=format&fit=crop&w=600&q=80",
+    rating: 4.8,
+    reviews: 134,
+    price: 1499,
+    freelancer: "Kavita P.",
+    freelancerImage: "https://randomuser.me/api/portraits/women/22.jpg",
+    link: "/freelancers/10",
+  },
+  {
+    id: 11,
+    title: "Music Production for Short Videos",
+    description: "I will create original background music for your short videos and reels.",
+    category: "music-audio",
+    image: "https://images.unsplash.com/photo-1507838153414-b4b713384a76?auto=format&fit=crop&w=600&q=80",
+    rating: 4.7,
+    reviews: 92,
+    price: 999,
+    freelancer: "Rohit M.",
+    freelancerImage: "https://randomuser.me/api/portraits/men/62.jpg",
+    link: "/freelancers/11",
+  },
+  {
+    id: 12,
+    title: "Instagram Growth Strategy",
+    description: "I will create a personalized Instagram growth strategy for your business.",
+    category: "digital-marketing",
+    image: "https://images.unsplash.com/photo-1611262588024-d12430b98920?auto=format&fit=crop&w=600&q=80",
+    rating: 4.9,
+    reviews: 75,
+    price: 1299,
+    freelancer: "Ishita J.",
+    freelancerImage: "https://randomuser.me/api/portraits/women/41.jpg",
+    link: "/freelancers/12",
+  }
 ];
 
 // Category display names
@@ -109,7 +186,7 @@ const categoryNames = {
 
 const CategoryPage = () => {
   const { categoryId } = useParams();
-  const [priceRange, setPriceRange] = useState([0, 500]);
+  const [priceRange, setPriceRange] = useState([0, 2000]);
   const [sortOption, setSortOption] = useState("popular");
   const [filterOpen, setFilterOpen] = useState(false);
   
@@ -171,17 +248,17 @@ const CategoryPage = () => {
             <div className={`w-full md:w-auto ${filterOpen ? 'block' : 'hidden md:block'}`}>
               <div className="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6">
                 <div>
-                  <label className="block text-sm font-medium mb-1">Price Range</label>
+                  <label className="block text-sm font-medium mb-1">Price Range (₹)</label>
                   <div className="w-64">
                     <Slider 
-                      defaultValue={[0, 500]} 
-                      max={500} 
-                      step={10}
+                      defaultValue={[0, 2000]} 
+                      max={2000} 
+                      step={100}
                       onValueChange={(value) => setPriceRange(value)}
                     />
                     <div className="flex justify-between mt-2 text-xs text-skill-gray-neutral">
-                      <span>${priceRange[0]}</span>
-                      <span>${priceRange[1]}</span>
+                      <span>₹{priceRange[0]}</span>
+                      <span>₹{priceRange[1]}</span>
                     </div>
                   </div>
                 </div>
@@ -210,12 +287,12 @@ const CategoryPage = () => {
           {sortedServices.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {sortedServices.map((service) => (
-                <a 
+                <Link 
                   key={service.id} 
-                  href={service.link}
-                  className="service-card group"
+                  to={service.link}
+                  className="service-card group border rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow"
                 >
-                  <div className="h-48 overflow-hidden rounded-t-lg">
+                  <div className="h-48 overflow-hidden">
                     <img 
                       src={service.image} 
                       alt={service.title} 
@@ -247,12 +324,13 @@ const CategoryPage = () => {
                         />
                         <span className="text-sm font-medium">{service.freelancer}</span>
                       </div>
-                      <div className="text-skill-purple font-semibold">
-                        From ${service.price}
+                      <div className="text-skill-purple font-semibold flex items-center">
+                        <IndianRupee className="w-3 h-3 mr-0.5" />
+                        {service.price}
                       </div>
                     </div>
                   </div>
-                </a>
+                </Link>
               ))}
             </div>
           ) : (
